@@ -39,9 +39,10 @@ export default async function Page() {
             <ul>
                 {data.items.map((item: any) => (
                     <li key={item.id}>
-                        <p>{item.name}</p>
+                        <a href={process.env.CURRENT_URL + "/info/tracks/" + item.id}>{item.name}</a>
                         <p>{item.artists[0].name}</p>
                         <p>{item.album.name}</p>
+                        
                         <img src={item.album.images[1].url} alt="Album Art" />
                     </li>
                 ))}
