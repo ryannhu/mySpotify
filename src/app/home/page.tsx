@@ -38,8 +38,6 @@ export default async function Page() {
 
     const data = await getData(accessToken);
     console.log(data);
-
-
     return (
         <div>
             <h1>Dashboard</h1>
@@ -49,6 +47,9 @@ export default async function Page() {
             <img src={data.images[1].url} alt="Profile Picture" />
 
             <a href={process.env.CURRENT_URL + `/tracks?access_token=${accessToken}`}>Tracks</a>
+            <div>
+            <a href={process.env.CURRENT_URL + '/artists'}>Artists</a>
+            </div>
         </div>
     );
 }

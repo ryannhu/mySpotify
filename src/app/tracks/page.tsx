@@ -6,7 +6,7 @@ import { useSearchParams } from "next/navigation";
 async function getData(accessToken: string) {
     const params = {
         "limit": "50",
-        "offset": "50",
+        "offset": "0",
         "time_range": "short_term",
     }
     const queryString = new URLSearchParams(params).toString();

@@ -1,4 +1,5 @@
 import { redirect } from 'next/navigation';
+import { cookies } from 'next/headers';
 
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
@@ -30,6 +31,10 @@ export async function GET(request: Request) {
     if (!response.ok) {
         return new Response('An error occurred', { status: 500 });
     }
+
+    cookies().set('data', JSON.stringify(data), {
+        httpOnly: true
+    });
 
     console.log(data);
     redirect(`/home?access_token=${data.access_token}&refresh_token=${data.refresh_token}&data=${JSON.stringify(data)}`); 
