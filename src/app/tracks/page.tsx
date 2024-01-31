@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import { UserData } from "@/interface";
+import { UserData,  } from "@/interface";
 
 async function getData() {
     const userData = cookies().get('data')?.value;
@@ -43,8 +43,8 @@ export default async function Page() {
                         <a href={process.env.CURRENT_URL + "/info/tracks/" + item.id}>{item.name}</a>
                         <br/>
                         <a href={process.env.CURRENT_URL + "/info/artist/" + item.artists[0].id}>{item.artists[0].name}</a>
-                        <p>{item.album.name}</p>
-                        
+                        <br/>
+                        <a href={process.env.CURRENT_URL + "/info/album/" + item.album.id}>{item.album.name}</a>
                         <img src={item.album.images[1].url} alt="Album Art" />
                     </li>
                 ))}
