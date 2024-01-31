@@ -1,33 +1,8 @@
 import { cookies } from 'next/headers'
+import { UserData, ArtistObject } from '@/interface'
 
-export interface UserData {
-    access_token: string,
-    token_type: string,
-    expires_in: number,
-    refresh_token: string,
-    scope: string
-}
 
-interface ImageObject {
-    url: string,
-    height: number,
-    width: number,
-}
-
-interface ArtistObject {
-    external_urls: object,
-    followers: object,
-    genres: string[],
-    href: string,
-    id: string,
-    images: ImageObject[],
-    name: string,
-    popularity: number,
-    type: string,
-    uri: string
-}
-
-interface Response {
+interface TopArtistData {
     href: string,
     limit: number,
     next: string,
@@ -37,7 +12,14 @@ interface Response {
     items: ArtistObject[]
 }
 
-async function getData(accessToken: string) {
+async function getData() : Promise<TopArtistData> {
+    const userData = cookies().get('data')?.value;
+    if (userData == null) {
+        throw new Error("cookie is null");
+    }
+    const data : UserData = JSON.parse(userData) as UserData;
+    const accessToken = data.access_token;
+
     const params = {
         "limit": "50",
         "offset": "0",
@@ -60,13 +42,8 @@ async function getData(accessToken: string) {
 }
 
 export default async function Page() {
-    const toParse = cookies().get('data')?.value;
-    if (toParse == null) {
-        throw Error("cookie is null");
-    } 
-    const data : UserData = JSON.parse(toParse) as UserData;
 
-    const artistData :  ArtistObject[] = (await getData(data.access_token)).items as ArtistObject[];
+    const artistData  = (await getData()).items;
     return (
         <div>
             <h1>

@@ -1,9 +1,14 @@
-'use client'
-import React from "react";
-import { useSearchParams } from "next/navigation";
+import { cookies } from "next/headers";
+import { UserData } from "@/interface";
 
+async function getData() {
+    const userData = cookies().get('data')?.value;
+    if (userData == null) {
+        throw new Error("cookie is null");
+    }
+    const data : UserData = JSON.parse(userData) as UserData;
+    const accessToken = data.access_token;
 
-async function getData(accessToken: string) {
     const params = {
         "limit": "50",
         "offset": "0",
@@ -26,11 +31,7 @@ async function getData(accessToken: string) {
 }
 
 export default async function Page() {
-    const searchParams = useSearchParams();
-
-    const accessToken = searchParams.get('access_token')!;
-
-    const data = await getData(accessToken);
+    const data = await getData();
     console.log(data.items);
 
     return (
@@ -40,7 +41,8 @@ export default async function Page() {
                 {data.items.map((item: any) => (
                     <li key={item.id}>
                         <a href={process.env.CURRENT_URL + "/info/tracks/" + item.id}>{item.name}</a>
-                        <p>{item.artists[0].name}</p>
+                        <br/>
+                        <a href={process.env.CURRENT_URL + "/info/artist/" + item.artists[0].id}>{item.artists[0].name}</a>
                         <p>{item.album.name}</p>
                         
                         <img src={item.album.images[1].url} alt="Album Art" />

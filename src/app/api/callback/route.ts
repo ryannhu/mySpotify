@@ -37,6 +37,6 @@ export async function GET(request: Request) {
     });
 
     console.log(data);
-    redirect(`/home?access_token=${data.access_token}&refresh_token=${data.refresh_token}&data=${JSON.stringify(data)}`); 
+    redirect(`/home`); 
 }
 

@@ -1,12 +1,16 @@
-'use client'
-import React from "react";
-import { useRouter } from "next/router";
-import { useSearchParams } from "next/navigation";
-import { access } from "fs";
 import { redirect } from "next/navigation";
+import { UserData } from "@/interface";
+import { cookies } from "next/headers";
 
 
-async function getData(accessToken: string) {
+async function getData() {
+    const userData = cookies().get('data')?.value;
+    if (userData == null) {
+        throw new Error("cookie is null");
+    }
+    const data : UserData = JSON.parse(userData) as UserData;
+    const accessToken = data.access_token;
+
     const params = {
         "limit": "50",
         "offset": "0",
@@ -32,12 +36,8 @@ async function getData(accessToken: string) {
 }
 
 export default async function Page() {
-    const searchParams = useSearchParams();
-
-    const accessToken = searchParams.get('access_token')!;
-
-    const data = await getData(accessToken);
-    console.log(data);
+    const data = await getData();
+    
     return (
         <div>
             <h1>Dashboard</h1>
@@ -46,7 +46,7 @@ export default async function Page() {
             <p>{data.id}</p>
             <img src={data.images[1].url} alt="Profile Picture" />
 
-            <a href={process.env.CURRENT_URL + `/tracks?access_token=${accessToken}`}>Tracks</a>
+            <a href={process.env.CURRENT_URL + `/tracks`}>Tracks</a>
             <div>
             <a href={process.env.CURRENT_URL + '/artists'}>Artists</a>
             </div>
