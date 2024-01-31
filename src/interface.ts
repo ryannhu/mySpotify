@@ -14,7 +14,7 @@ export interface ImageObject {
 
 export interface ArtistObject {
     external_urls: object,
-    followers: object,
+    followers: Followers,
     genres: string[],
     href: string,
     id: string,
@@ -23,6 +23,11 @@ export interface ArtistObject {
     popularity: number,
     type: string,
     uri: string
+}
+
+interface Followers {
+    href: string,
+    total: number
 }
 
 interface SimplifiedArtistObject {
@@ -57,7 +62,22 @@ export interface AlbumObject {
     popularity: number
 }
 
-
+export interface PlaylistObject {
+    collaborative: boolean,
+    description: string,
+    external_urls: object,
+    href: string,
+    id: string,
+    images: ImageObject[],
+    name: string,
+    owner: object,
+    primary_color: string,
+    public: boolean,
+    snapshot_id: string,
+    tracks: object, // properly type later
+    type: string,
+    uri: string
+}
 
 enum MusicalKey {
     C = "C",

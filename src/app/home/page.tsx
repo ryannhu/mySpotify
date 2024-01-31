@@ -29,7 +29,7 @@ async function getData() {
     console.log(res);
 
     if (!res.ok) {
-        throw new Error("Failed to fetch API");
+        throw new Error("Failed to fetch API" + res.status + res.statusText);
     }
 
     return res.json();
@@ -50,6 +50,7 @@ export default async function Page() {
             <div>
             <a href={process.env.CURRENT_URL + '/artists'}>Artists</a>
             </div>
+            <a href={process.env.CURRENT_URL + `/playlists`}>Playlists</a>
         </div>
     );
 }

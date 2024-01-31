@@ -45,8 +45,6 @@ interface AudioFeatures {
     valence: number
 }
 
- 
-
 async function GetData(id: string) : Promise<TrackData> {
     const userData = cookies().get('data')?.value;
     if (userData == null) {
@@ -54,12 +52,6 @@ async function GetData(id: string) : Promise<TrackData> {
     }
     const data : UserData = JSON.parse(userData) as UserData;
     const accessToken = data.access_token;
-    const params = {
-        "limit": "50",
-        "offset": "0",
-        "time_range": "short_term",
-    }
-    const queryString = new URLSearchParams(params).toString();
     const res = await fetch(`https://api.spotify.com/v1/tracks/${id}`, {
         headers: {
             "Authorization": `Bearer ${accessToken}`
@@ -69,7 +61,6 @@ async function GetData(id: string) : Promise<TrackData> {
     if (!res.ok) {
         throw new Error("Failed to fetch API");
     }
-
     return res.json();
 }
 
