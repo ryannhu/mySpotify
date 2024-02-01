@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers'
 import { UserData, ArtistObject } from '@/interface'
-
+import Header from '../components/header'
 
 interface TopArtistData {
     href: string,
@@ -26,8 +26,6 @@ async function getData() : Promise<TopArtistData> {
         "time_range": "short_term",
     }
     const queryString = new URLSearchParams(params).toString();
-    console.log(queryString);
-    console.log(`https://api.spotify.com/v1/me/top/artists?${queryString}`)
     const res = await fetch(`https://api.spotify.com/v1/me/top/artists?${queryString}`, {
         headers: {
             "Authorization": `Bearer ${accessToken}`
@@ -43,7 +41,7 @@ async function getData() : Promise<TopArtistData> {
 
 export default async function Page() {
 
-    const artistData  = (await getData()).items;
+    const artistData : ArtistObject[] = (await getData()).items as ArtistObject[];
     return (
         <div>
             <h1>
@@ -62,6 +60,7 @@ export default async function Page() {
                     </li>
                 ))}
             </ul>
+            <Header/>
         </div>
     )
 }

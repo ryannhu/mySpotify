@@ -1,22 +1,30 @@
 import { cookies } from "next/headers";
-import { UserData,  } from "@/interface";
+import { UserData, TrackData } from "@/interface";
+import Header from "../components/header";
 
-async function getData() {
+interface TopTrackData {
+    href: string,
+    limit: number,
+    next: string,
+    offset: number,
+    previous: string,
+    total: number,
+    items: TrackData[]
+}
+
+async function getData() : Promise<TopTrackData> {
     const userData = cookies().get('data')?.value;
     if (userData == null) {
         throw new Error("cookie is null");
     }
     const data : UserData = JSON.parse(userData) as UserData;
     const accessToken = data.access_token;
-
     const params = {
         "limit": "50",
         "offset": "0",
         "time_range": "short_term",
     }
     const queryString = new URLSearchParams(params).toString();
-    console.log(queryString);
-    console.log(`https://api.spotify.com/v1/me/top/tracks?${queryString}`)
     const res = await fetch(`https://api.spotify.com/v1/me/top/tracks?${queryString}`, {
         headers: {
             "Authorization": `Bearer ${accessToken}`
@@ -31,14 +39,14 @@ async function getData() {
 }
 
 export default async function Page() {
-    const data = await getData();
+    const data : TopTrackData = await getData() as TopTrackData;
     console.log(data.items);
 
     return (
         <div>
             <h1>Top Tracks</h1>
             <ul>
-                {data.items.map((item: any) => (
+                {data.items.map((item : TrackData) => (
                     <li key={item.id}>
                         <a href={process.env.CURRENT_URL + "/info/tracks/" + item.id}>{item.name}</a>
                         <br/>
@@ -49,6 +57,7 @@ export default async function Page() {
                     </li>
                 ))}
             </ul>
+            <Header/>
         </div>
     );
 }

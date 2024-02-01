@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
 import { UserData, PlaylistObject } from "@/interface";
+import Header from "@/app/components/header"
 
 interface PlaylistData {
     href: string,
@@ -54,6 +55,7 @@ export default async function Page() {
                     }
                     </div>
                 ))}
+            <Header/>
         </div>
     );
 }
