@@ -26,8 +26,6 @@ export async function GET(request: Request) {
     
     const data = await response.json();
 
-    console.log(data);
-
     if (!response.ok) {
         return new Response('An error occurred', { status: 500 });
     }
@@ -36,7 +34,6 @@ export async function GET(request: Request) {
         httpOnly: true
     });
 
-    console.log(data);
     redirect(`/home`); 
 }
 

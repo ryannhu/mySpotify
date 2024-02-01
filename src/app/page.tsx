@@ -1,19 +1,9 @@
-import Image from "next/image";
+import LoginButton from "./components/loginButton";
 
 export default function Home() {
-  const CLIENT_ID = process.env.CLIENT_ID;
-  const REDIRECT_URI = process.env.CURRENT_URL + "/api/callback";
-  const AUTH_ENDPOINT = 'https://accounts.spotify.com/authorize';
-  const RESPONSE_TYPE = 'code';
-  const SCOPES = ['user-read-private', 'user-read-email', 'user-top-read', 'user-read-playback-state', 'user-read-recently-played', 'user-read-currently-playing', 'playlist-read-private'];
-  // const STATE = generateRandomString(16);
-
-  const authUrl = `${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${encodeURIComponent(SCOPES.join(' '))}`;
-
-
-  return (
-    <div>
-      <a href={authUrl}>Login</a>
+    return (
+    <div className="bg-gray-900 text-white h-screen">
+      <LoginButton/>
     </div>
   );
 }

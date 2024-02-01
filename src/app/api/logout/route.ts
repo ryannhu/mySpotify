@@ -1,4 +1,3 @@
-// import { NextApiRequest, NextResponse } from "next";
 import { cookies } from "next/headers";
 
 export async function POST() {

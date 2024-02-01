@@ -1,11 +1,12 @@
 import { cookies } from "next/headers";
 import { UserData, AlbumObject } from "@/interface";
+import { redirect } from "next/navigation";
 
 
 async function GetData(id: string) : Promise<AlbumObject> {
     const userData = cookies().get('data')?.value;
     if (userData == null) {
-        throw new Error("cookie is null");
+        redirect("/");
     }
     const data : UserData = JSON.parse(userData) as UserData;
     const accessToken = data.access_token;

@@ -20,7 +20,7 @@ interface ProfileData {
 async function getData() : Promise<ProfileData> {
     const userData = cookies().get('data')?.value;
     if (userData == null) {
-        throw new Error("cookie is null");
+        redirect("/");
     }
     const data : UserData = JSON.parse(userData) as UserData;
     const accessToken = data.access_token;
