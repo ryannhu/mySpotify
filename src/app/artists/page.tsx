@@ -51,7 +51,7 @@ export default async function Page() {
         {artistData.map((item: ArtistObject) => (
           <li key={item.id}>
             <img src={item.images[1].url} alt="Artist Picture" />
-            <p>{item.name}</p>
+            <a href={`/info/artist/${item.id}`}>{item.name}</a>
             <p>Popularity: {item.popularity}</p>
 
             {/* <p>{item.artists[0].name}</p> */}
