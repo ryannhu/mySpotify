@@ -32,9 +32,8 @@ async function getData(): Promise<ProfileData> {
   if (res.status === 401) {
     // use redirect, maybe should make function
     console.log("hello 401");
-    await fetch("api/refresh", { method: "GET" });
-  }
-  if (!res.ok) {
+    await fetch("http://localhost:3000/api/refresh", { method: "GET" });
+  } else if (!res.ok) {
     throw new Error("Failed to fetch API" + res.status + res.statusText);
   }
   return res.json();

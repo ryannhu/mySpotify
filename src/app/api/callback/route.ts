@@ -1,23 +1,28 @@
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
-import { createCipheriv, createDecipheriv, randomBytes, Cipher, Decipher } from 'crypto';
-
+import {
+  createCipheriv,
+  createDecipheriv,
+  randomBytes,
+  Cipher,
+  Decipher,
+} from "crypto";
 
 // const SECRET_KEY = process.env.PASSWORD
 // const IV = crypto.randomBytes(16);
 
 function encrypt(data: string, key: Buffer, iv: Buffer): string {
-    const cipher: Cipher = createCipheriv('aes-256-cbc', key, iv);
-    let encrypted: Buffer = cipher.update(data, 'utf8');
-    encrypted = Buffer.concat([encrypted, cipher.final()]);
-    return encrypted.toString('hex');
+  const cipher: Cipher = createCipheriv("aes-256-cbc", key, iv);
+  let encrypted: Buffer = cipher.update(data, "utf8");
+  encrypted = Buffer.concat([encrypted, cipher.final()]);
+  return encrypted.toString("hex");
 }
 
 function decrypt(data: string, key: Buffer, iv: Buffer): string {
-    const decipher: Decipher = createDecipheriv('aes-256-cbc', key, iv);
-    let decrypted: Buffer = decipher.update(Buffer.from(data, 'hex'));
-    decrypted = Buffer.concat([decrypted, decipher.final()]);
-    return decrypted.toString('utf8');
+  const decipher: Decipher = createDecipheriv("aes-256-cbc", key, iv);
+  let decrypted: Buffer = decipher.update(Buffer.from(data, "hex"));
+  decrypted = Buffer.concat([decrypted, decipher.final()]);
+  return decrypted.toString("utf8");
 }
 
 export async function GET(request: Request) {

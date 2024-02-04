@@ -4,6 +4,7 @@ import { UserData } from "@/interface";
 
 // to implement the refresh token, we need to make a POST request to the Spotify API
 export async function GET(request: Request) {
+  console.log("hi");
   const clientId: string = process.env.CLIENT_ID!;
 
   const userData = cookies().get("data")?.value;
