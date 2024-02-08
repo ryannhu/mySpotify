@@ -1,19 +1,11 @@
 "use server";
 
 import { cookies, headers } from "next/headers";
-import { UserData, TrackData } from "@/interface";
+import { UserData, TrackData, TopTrackData } from "@/interface";
 import Header from "../components/header";
 import TrackList from "./tracklist";
 
-interface TopTrackData {
-  href: string;
-  limit: number;
-  next: string;
-  offset: number;
-  previous: string;
-  total: number;
-  items: TrackData[];
-}
+
 
 async function getData(
   timeRange: string = "short_term",
@@ -93,7 +85,7 @@ export default async function Page({
         <h1 className="justify-center content-center text-white text-4xl basis-1/2">
           Top Tracks
         </h1>
-        <div className="flex basis-1/4 flex-row justify-between px-2">
+        <div className="flex basis-1/4 flex-row justify-between px-2 text-white">
           <a href="tracks/?timeRange=short_term">Last 4 Weeks</a>
           <a href="tracks/?timeRange=medium_term">Last 6 Months</a>
           <a href="tracks/?timeRange=long_term">All Time</a>

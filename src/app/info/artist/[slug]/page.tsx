@@ -31,17 +31,20 @@ async function GetData(id: string): Promise<ArtistObject> {
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const artistData = await GetData(params.slug);
-  console.log(artistData);
+
   return (
-    <div>
-      <h1>Artist Info</h1>
-      <p>{artistData.name}</p>
-      <p>Popularity: {artistData.popularity}</p>
-      <p>Followers: {artistData.followers.total}</p>
-      <img src={artistData.images[1].url} alt="Artist Picture" />
-      {artistData.genres.map((genre: string) => (
-        <p key={genre}>{genre}</p>
-      ))}
+    <div className="bg-gray-900 text-white min-h-screen flex flex-col items-center py-10">
+      <h1 className="text-4xl font-bold mb-6">Artist Info</h1>
+      <p className="text-2xl font-semibold mb-2">{artistData.name}</p>
+      <p className="text-lg mb-1">Popularity: {artistData.popularity}</p>
+      <p className="text-lg mb-4">Followers: {artistData.followers.total.toLocaleString()}</p>
+      <img src={artistData.images[1].url} alt="Artist Picture" className="w-48 h-48 object-cover rounded-full mb-4" />
+      <div className="flex flex-wrap justify-center gap-2 mb-4">
+        {artistData.genres.map((genre: string, index: number) => (
+          <span key={index} className="bg-gray-700 px-3 py-1 rounded-full text-sm font-medium">{genre}</span>
+        ))}
+      </div>
     </div>
   );
 }
+

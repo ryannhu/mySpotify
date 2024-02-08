@@ -54,7 +54,7 @@ export interface AlbumObject {
   type: string;
   uri: string;
   artists: SimplifiedArtistObject[];
-  tracks: object; // properly type later
+  tracks: TopTrackData; // properly type later
   copyrights: object[];
   external_ids: object;
   genres: string[];
@@ -85,6 +85,16 @@ export interface TrackData {
   is_local: boolean;
 }
 
+export interface TopTrackData {
+  href: string;
+  limit: number;
+  next: string;
+  offset: number;
+  previous: string;
+  total: number;
+  items: TrackData[];
+}
+
 export interface PlaylistObject {
   collaborative: boolean;
   description: string;
@@ -97,9 +107,30 @@ export interface PlaylistObject {
   primary_color: string;
   public: boolean;
   snapshot_id: string;
-  tracks: object; // properly type later
+  tracks: TopTrackData; // properly type later
   type: string;
   uri: string;
+}
+
+export interface AudioFeatures {
+  acousticness: number;
+  analysis_url: string;
+  danceability: number;
+  duration_ms: number;
+  energy: number;
+  id: string;
+  instrumentalness: number;
+  key: number;
+  liveness: number;
+  loudness: number;
+  mode: number;
+  speechiness: number;
+  tempo: number;
+  time_signature: number;
+  track_href: string;
+  type: string;
+  uri: string;
+  valence: number;
 }
 
 enum MusicalKey {

@@ -31,11 +31,29 @@ export default async function Page({ params }: { params: { slug: string } }) {
       <p>{albumData.name}</p>
       <p>Release Date: {albumData.release_date}</p>
       <p>Popularity: {albumData.popularity}</p>
-      <p>Artists: {albumData.artists[0].name}</p>
+      <p>Artists: {albumData.artists.map((artist, index) => {
+        return (
+          <span key={artist.id}>
+            <a href={`/info/artist/${artist.id}`}>{artist.name}
+            {index < albumData.artists.length - 1 ? ', ' : ''}
+            </a>
+          </span>
+        );
+      })}</p>
       <img src={albumData.images[1].url} alt="Album Picture" />
       {albumData.genres.map((genre: string) => (
         <p key={genre}>{genre}</p>
       ))}
+      <ul>
+      {albumData.tracks.items.map((track) => {
+        return (
+            <li key={track.id}>
+            <a href={`/info/tracks/${track.id}`}>{track.name}</a>
+            </li>
+        )
+      })}
+      </ul>
+
     </div>
   );
 }
