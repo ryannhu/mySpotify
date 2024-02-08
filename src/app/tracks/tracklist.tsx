@@ -10,7 +10,7 @@ const TrackList: React.FC<{ tracks: TrackData[] }> = ({ tracks }) => {
         {tracks.map((track, index) => {
           const trackLink = "/info/tracks/" + track.id;
           return (
-            <a href={trackLink}>
+            <a id={track.id} href={trackLink}>
               <TrackItem track={track} index={index} />
             </a>
           );
