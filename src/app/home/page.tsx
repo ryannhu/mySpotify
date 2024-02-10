@@ -1,3 +1,5 @@
+'use server'
+
 import { redirect } from "next/navigation";
 import { UserData } from "@/interface";
 import { cookies } from "next/headers";
@@ -19,7 +21,7 @@ interface ProfileData {
 
 async function getData(): Promise<ProfileData> {
   const userData = cookies().get("data")?.value;
-  if (userData == null) {
+  if (userData == null || userData == undefined) {
     redirect("/");
   }
   const data: UserData = JSON.parse(userData) as UserData;
@@ -29,13 +31,6 @@ async function getData(): Promise<ProfileData> {
       Authorization: `Bearer ${accessToken}`,
     },
   });
-  if (res.status === 401) {
-    // use redirect, maybe should make function
-    console.log("hello 401");
-    await fetch("http://localhost:3000/api/refresh", { method: "GET" });
-  } else if (!res.ok) {
-    throw new Error("Failed to fetch API" + res.status + res.statusText);
-  }
   return res.json();
 }
 
