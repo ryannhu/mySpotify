@@ -37,14 +37,24 @@ export default async function Page({ params }: { params: { slug: string } }) {
       <h1 className="text-4xl font-bold mb-6">Artist Info</h1>
       <p className="text-2xl font-semibold mb-2">{artistData.name}</p>
       <p className="text-lg mb-1">Popularity: {artistData.popularity}</p>
-      <p className="text-lg mb-4">Followers: {artistData.followers.total.toLocaleString()}</p>
-      <img src={artistData.images[1].url} alt="Artist Picture" className="w-48 h-48 object-cover rounded-full mb-4" />
+      <p className="text-lg mb-4">
+        Followers: {artistData.followers.total.toLocaleString()}
+      </p>
+      <img
+        src={artistData.images[1].url}
+        alt="Artist Picture"
+        className="w-48 h-48 object-cover rounded-full mb-4"
+      />
       <div className="flex flex-wrap justify-center gap-2 mb-4">
         {artistData.genres.map((genre: string, index: number) => (
-          <span key={index} className="bg-gray-700 px-3 py-1 rounded-full text-sm font-medium">{genre}</span>
+          <span
+            key={index}
+            className="bg-gray-700 px-3 py-1 rounded-full text-sm font-medium"
+          >
+            {genre}
+          </span>
         ))}
       </div>
     </div>
   );
 }
-

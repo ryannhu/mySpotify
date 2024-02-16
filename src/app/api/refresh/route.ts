@@ -18,7 +18,11 @@ export async function GET(request: Request) {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
-      "Authorization": 'Basic ' + (Buffer.from(clientId + ':' + process.env.CLIENT_SECRET).toString('base64'))
+      Authorization:
+        "Basic " +
+        Buffer.from(clientId + ":" + process.env.CLIENT_SECRET).toString(
+          "base64",
+        ),
     },
     body: new URLSearchParams({
       grant_type: "refresh_token",
@@ -28,7 +32,7 @@ export async function GET(request: Request) {
   const body = await fetch(url, payload);
   const response = await body.json();
   // console.log(response.access_token);
-  const res = NextResponse.json({data: response}, {status: 200});
+  const res = NextResponse.json({ data: response }, { status: 200 });
   // const res = Response.json({ message: "Refreshed token" }, { status: 200,
   // headers: {
   //   "Set-Cookie": cookies().getAll().toString(),

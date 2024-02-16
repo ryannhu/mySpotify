@@ -62,7 +62,7 @@ export async function GET(request: Request) {
   cookies().set("refresh_token", data.refresh_token, {
     httpOnly: true,
     maxAge: 60 * 60 * 24 * 7, // 1 week
-    });
+  });
 
   redirect(`/home`);
 }

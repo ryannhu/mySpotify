@@ -5,8 +5,6 @@ import { UserData, TrackData, TopTrackData } from "@/interface";
 import Header from "../components/header";
 import TrackList from "./tracklist";
 
-
-
 async function getData(
   timeRange: string = "short_term",
 ): Promise<TopTrackData> {

@@ -43,20 +43,20 @@ async function getData(): Promise<TopArtistData> {
 }
 
 export default async function Page() {
-  const artistData: ArtistObject[] = (await getData()).items as ArtistObject[];
+  let artistData: ArtistObject[] = (await getData()).items as ArtistObject[];
+  // artistData.sort((a, b) => b.popularity - a.popularity);
   return (
-    <div>
+    <div className="pb-20">
       <h1>Top Artists</h1>
       <ul>
-        {artistData.map((item: ArtistObject) => (
+        {artistData.map((item: ArtistObject, index) => (
           <li key={item.id}>
+            <div>
             <img src={item.images[1].url} alt="Artist Picture" />
-            <a href={`/info/artist/${item.id}`}>{item.name}</a>
-            <p>Popularity: {item.popularity}</p>
+            <a href={`/info/artist/${item.id}`}>{index + 1}. {item.name}</a>
+            </div>
 
-            {/* <p>{item.artists[0].name}</p> */}
-            {/* <p>{item.album.name}</p> */}
-            {/* <img src={item.album.images[1].url} alt="Album Art" /> */}
+
           </li>
         ))}
       </ul>

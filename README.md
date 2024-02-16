@@ -9,6 +9,7 @@ Get a personalized spotify experience. Create, view, edit and save your playlist
 ## App
 
 This app was built using:
+
 - Next.js
 - Tailwind.css
 - Spotify API
