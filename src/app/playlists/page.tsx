@@ -44,13 +44,12 @@ async function getData(): Promise<PlaylistData> {
 export default async function Page() {
   const data = await getData();
   const playlists = data.items;
-  console.log(data);
   return (
     <div>
       <h1>Playlists</h1>
       {playlists.map((playlist: PlaylistObject) => (
         <div key={playlist.id}>
-          <p>{playlist.name}</p>
+          <a href={`/info/playlist/${playlist.id}`}>{playlist.name}</a>
           <p>{playlist.description}</p>
           {playlist.images.length > 0 ? (
             <img src={playlist.images[0].url} alt="Playlist Art" />

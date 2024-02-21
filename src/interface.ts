@@ -95,6 +95,16 @@ export interface TopTrackData {
   items: TrackData[];
 }
 
+export interface TrackResponse<TrackType> {
+  href: string;
+  limit: number;
+  next: string;
+  offset: number;
+  previous: string;
+  total: number;
+  items: TrackType[]; 
+}
+
 export interface PlaylistObject {
   collaborative: boolean;
   description: string;
@@ -110,6 +120,13 @@ export interface PlaylistObject {
   tracks: TopTrackData; // properly type later
   type: string;
   uri: string;
+}
+
+export interface PlaylistTrackObject {
+  added_at: string,
+  added_by: object,
+  is_local: boolean,
+  track: TrackData
 }
 
 export interface AudioFeatures {

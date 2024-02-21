@@ -23,7 +23,7 @@ const Track: React.FC<TrackProps> = ({ track, index }) => {
       <div className="flex items-center col-start-1 col-end-3">
         <span className="text-gray-300 text-sm">{index + 1}</span>
         <img
-          className="h-12 w-12 rounded-full object-cover mx-4"
+          className="h-12 w-12 object-cover mx-4"
           src={track.album.images[0].url}
           alt=""
         />

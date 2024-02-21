@@ -21,8 +21,8 @@ async function getData(): Promise<TopArtistData> {
   const data: UserData = JSON.parse(userData) as UserData;
   const accessToken = data.access_token;
 
-  const params = {
-    limit: "50",
+  let params = {
+    limit: "49",
     offset: "0",
     time_range: "short_term",
   };
@@ -36,10 +36,33 @@ async function getData(): Promise<TopArtistData> {
     },
   );
 
+
   if (!res.ok) {
     throw new Error("Failed to fetch API");
   }
 
+  
+  params = {
+    limit: "50",
+    offset: "49",
+    time_range: "short_term",
+  };
+
+  const queryString2 = new URLSearchParams(params).toString();
+  const res2 = await fetch(
+    `https://api.spotify.com/v1/me/top/artists?${queryString2}`,
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    },
+  );
+
+  const data1 = await res.json();
+  const data2 = await res2.json();
+  data1.items = data1.items.concat(data2.items);
+  return data1 as TopArtistData;
+    console.log(data1.items.length)
   return res.json();
 }
 
@@ -47,21 +70,17 @@ export default async function Page() {
   let artistData: ArtistObject[] = (await getData()).items as ArtistObject[];
   // artistData.sort((a, b) => b.popularity - a.popularity);
   return (
-    <div className="pb-20">
-      <h1>Top Artists</h1>
-      <ul>
-        {artistData.map((item: ArtistObject, index) => (
-          <li key={item.id}>
+    <div className="pb-20 bg-gray-900">
+      <h1 className="text-xl font-bold mb-4 text-white mb-24">Top Artists</h1>
+      <div className="px-72 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {artistData.map((item, index) => (
+          <div key={item.id} className="col-span-1">
             <div>
-             <ArtistPortrait artist={item} /> 
-            {/* <img src={item.images[1].url} alt="Artist Picture" />
-            <a href={`/info/artist/${item.id}`}>{index + 1}. {item.name}</a> */}
+              <ArtistPortrait artist={item} rank={index + 1}/>
             </div>
-
-
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
       <Header />
     </div>
   );

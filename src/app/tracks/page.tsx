@@ -15,7 +15,7 @@ async function getData(
   const data: UserData = JSON.parse(userData) as UserData;
   const accessToken = data.access_token;
   let params = {
-    limit: "49",
+    limit: "50",
     offset: "0",
     time_range: timeRange,
   };
@@ -43,6 +43,8 @@ async function getData(
     throw new Error("Failed to fetch API");
   }
 
+  const trackData = await res.json() as TopTrackData;
+  let next = trackData.next;
   params = {
     limit: "50",
     offset: "49",
@@ -52,20 +54,26 @@ async function getData(
   queryString = new URLSearchParams(params).toString();
 
   // make second call for items 50-99
-  const res2 = await fetch(
-    `https://api.spotify.com/v1/me/top/tracks?${queryString}&offset=49`,
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
+  while (true) {
+    const res2 = await fetch(
+      next,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
       },
-    },
-  );
+    );
+    const check = await res2.json() as TopTrackData;
+    trackData.items = trackData.items.concat(check.items);
+    next = check.next;
 
-  // combine the two responses items
-  const data1 = await res.json();
-  const data2 = await res2.json();
-  data1.items = data1.items.concat(data2.items);
-  return data1 as TopTrackData;
+    if (next == null) {
+      break;
+    }
+    // console.log(check.items);
+  }
+
+  return trackData as TopTrackData;
 }
 
 export default async function Page({
