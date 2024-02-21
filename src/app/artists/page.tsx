@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import { UserData, ArtistObject } from "@/interface";
 import Header from "../components/header";
+import ArtistPortrait from "./artistportrait";
 
 interface TopArtistData {
   href: string;
@@ -52,8 +53,9 @@ export default async function Page() {
         {artistData.map((item: ArtistObject, index) => (
           <li key={item.id}>
             <div>
-            <img src={item.images[1].url} alt="Artist Picture" />
-            <a href={`/info/artist/${item.id}`}>{index + 1}. {item.name}</a>
+             <ArtistPortrait artist={item} /> 
+            {/* <img src={item.images[1].url} alt="Artist Picture" />
+            <a href={`/info/artist/${item.id}`}>{index + 1}. {item.name}</a> */}
             </div>
 
 
