@@ -7,49 +7,49 @@ import {
 } from "next/dist/compiled/@edge-runtime/cookies";
 
 export async function middleware(request: NextRequest) {
-  const cookie = cookies().get("data");
-  const { pathname, origin } = request.nextUrl;
+  // const cookie = cookies().get("data");
+  // const { pathname, origin } = request.nextUrl;
 
-  // if the user is not logged in, redirect to the login page
-  if (cookie == null || cookie == undefined) {
-    return NextResponse.redirect(`${origin}`);
-  }
-  if (cookie.value == "") {
-    return NextResponse.redirect(`${origin}`);
-  }
+  // // if the user is not logged in, redirect to the login page
+  // if (cookie == null || cookie == undefined) {
+  //   return NextResponse.redirect(`${origin}`);
+  // }
+  // if (cookie.value == "") {
+  //   return NextResponse.redirect(`${origin}`);
+  // }
 
-  // check if user's access token is expired
-  // make call to spotify api to ping the user's access token
-  const userData = JSON.parse(cookie.value);
-  const accessToken = userData.access_token;
-  const response = await fetch("https://api.spotify.com/v1/me", {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
+  // // check if user's access token is expired
+  // // make call to spotify api to ping the user's access token
+  // const userData = JSON.parse(cookie.value);
+  // const accessToken = userData.access_token;
+  // const response = await fetch("https://api.spotify.com/v1/me", {
+  //   headers: {
+  //     Authorization: `Bearer ${accessToken}`,
+  //   },
+  // });
 
-  const nextResponse = NextResponse.next();
-  // if the access token is expired, refresh the token
-  if (response.status === 401) {
-    const refreshToken = await fetch(`${process.env.CURRENT_URL}/api/refresh`, {
-      method: "GET",
-      headers: { Cookie: cookies().toString() },
-    });
+  // const nextResponse = NextResponse.next();
+  // // if the access token is expired, refresh the token
+  // if (response.status === 401) {
+  //   const refreshToken = await fetch(`${process.env.CURRENT_URL}/api/refresh`, {
+  //     method: "GET",
+  //     headers: { Cookie: cookies().toString() },
+  //   });
 
-    const data = (await refreshToken.json()).data;
+  //   const data = (await refreshToken.json()).data;
 
-    nextResponse.cookies.set("data", JSON.stringify(data), {
-      httpOnly: true,
-      maxAge: 60 * 60 * 24 * 7, // 1 week
-      path: "/",
-    });
+  //   nextResponse.cookies.set("data", JSON.stringify(data), {
+  //     httpOnly: true,
+  //     maxAge: 60 * 60 * 24 * 7, // 1 week
+  //     path: "/",
+  //   });
 
-    applySetCookie(request, nextResponse);
-  } else if (!response.ok) {
-    return NextResponse.redirect(`${origin}`);
-  }
+  //   applySetCookie(request, nextResponse);
+  // } else if (!response.ok) {
+  //   return NextResponse.redirect(`${origin}`);
+  // }
 
-  return nextResponse;
+  // return nextResponse;
 }
 
 function applySetCookie(req: NextRequest, res: NextResponse): void {
