@@ -5,7 +5,7 @@ import TrackItem from "./trackitem";
 
 const TrackList: React.FC<{ tracks: TrackData[] }> = ({ tracks }) => {
   return (
-    <div className="bg-gray-900 text-white min-h-screen py-10">
+    <div className="bg-gray-900 text-white min-h-screen my-10">
       <ul className="space-y-0.5">
         {tracks.map((track, index) => {
           const trackLink = "/info/tracks/" + track.id;

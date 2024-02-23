@@ -31,7 +31,7 @@ export async function middleware(request: NextRequest) {
   const nextResponse = NextResponse.next();
   // if the access token is expired, refresh the token
   if (response.status === 401) {
-    const refreshToken = await fetch("http://localhost:3000/api/refresh", {
+    const refreshToken = await fetch(`${process.env.CURRENT_URL}/api/refresh`, {
       method: "GET",
       headers: { Cookie: cookies().toString() },
     });

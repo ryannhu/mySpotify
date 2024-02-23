@@ -16,8 +16,6 @@ async function GetData(id: string): Promise<ArtistObject> {
     },
   });
 
-  console.log(res);
-
   if (!res.ok) {
     throw new Error("Failed to fetch API, error code: " + res.status);
   }
@@ -73,7 +71,11 @@ export default async function Page({ params }: { params: { slug: string } }) {
           </span>
         ))}
       </div>
+      <h2 className="text-lg mb-4 mt-10 -mb-1">
+        Artist Top Tracks</h2>
+      <div className="lg:w-1/2">
       <TrackList tracks={artistTopTracks}/>
+      </div>
     </div>
   );
 }

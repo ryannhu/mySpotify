@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 import { UserData, PlaylistObject, PlaylistTrackObject, TrackResponse } from "@/interface";
 import { redirect } from "next/navigation";
 import TrackList from "@/app/tracks/tracklist";
+import { Suspense } from "react";
 import Track from "@/app/tracks/trackitem";
 
 async function GetPlaylistInfo(id: string): Promise<any> {
@@ -48,9 +49,10 @@ async function GetPlaylistTracks(id: string): Promise<TrackResponse<PlaylistTrac
 export default async function Page({ params }: { params: { slug: string } }) {
   const playlistResponse = await GetPlaylistTracks(params.slug);
   const playlistTracks = playlistResponse.items;
+  const trackList = playlistTracks.map((track) => track.track);
   return (
-    <div>
-      <ul>
+    <div className="w-screen flex justify-center items-center">
+      {/* <ul>
         {playlistTracks.map(({track}) => {
           return (
             <li key={track.id}>
@@ -58,8 +60,10 @@ export default async function Page({ params }: { params: { slug: string } }) {
             </li>
           );
         })}
-      </ul>
-      {/* <TrackList tracks={playlistTracks}/> */}
+      </ul> */}
+      <div className="w-1/2 flex justify-center items-center">
+      <TrackList tracks={trackList}/>
+      </div>
     </div>
   );
 }
